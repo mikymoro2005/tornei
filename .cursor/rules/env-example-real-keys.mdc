@@ -1,0 +1,6 @@
+---
+description: .env.example contiene chiavi pubbliche Tornei (scelta proprietario)
+alwaysApply: true
+---
+
+Nel repo **tornei**, il file `.env.example` viene usato dal proprietario con **valori VITE_* reali** copiati da Supabase. **Non** sostituire le chiavi con placeholder `xxxx`/`TUA-REF` e **non** “sanitizzare” il file a meno che il proprietario non lo chieda esplicitamente. La service role resta sempre fuori repo (solo `.env.provision` locale).
