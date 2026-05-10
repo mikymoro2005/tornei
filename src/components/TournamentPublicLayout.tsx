@@ -5,20 +5,10 @@ import { TournamentTheme } from './TournamentTheme'
 
 type Props = {
   tournament: TournamentRow
-  children?: ReactNode
+  children: ReactNode
 }
 
 export function TournamentPublicLayout({ tournament, children }: Props) {
-  const panel = (
-    <section className="card">
-      <h2>Prossimi passi</h2>
-      <ul className="list">
-        <li>Collega Supabase Realtime su <code>matches</code> e <code>goals</code> per aggiornamenti live.</li>
-        <li>Liste partite, gironi e tabellone: da aggiungere sopra questo blocco.</li>
-      </ul>
-    </section>
-  )
-
   return (
     <TournamentTheme tournament={tournament}>
       <header className="site-header">
@@ -41,7 +31,7 @@ export function TournamentPublicLayout({ tournament, children }: Props) {
         </Link>
       </header>
 
-      <main className="page narrow">{children ?? panel}</main>
+      <main className="page tournament-public-main">{children}</main>
     </TournamentTheme>
   )
 }

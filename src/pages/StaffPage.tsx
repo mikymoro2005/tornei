@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
+import { StaffTournamentPanel } from '../components/staff/StaffTournamentPanel'
 import { useAuth } from '../auth/useAuth'
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
 import { useTournamentBySlug } from '../hooks/useTournamentBySlug'
@@ -10,22 +11,24 @@ export function StaffPage() {
   const { session, loading: authLoading } = useAuth()
   const { tournament, loading: tLoading, error } = useTournamentBySlug(slug)
 
-  const [staffOk, setStaffOk] = useState<boolean | null>(null)
+  const [staffState, setStaffState] = useState<'checking' | 'denied' | { role: 'owner' | 'admin' | 'scorer' }>('checking')
 
   useEffect(() => {
     if (!supabase || !session?.user || !tournament) {
-      setStaffOk(null)
+      setStaffState('checking')
       return
     }
     let cancelled = false
     void supabase
       .from('tournament_staff')
-      .select('id')
+      .select('role')
       .eq('tournament_id', tournament.id)
       .eq('user_id', session.user.id)
       .maybeSingle()
       .then(({ data }) => {
-        if (!cancelled) setStaffOk(!!data)
+        if (cancelled) return
+        if (!data?.role || !['owner', 'admin', 'scorer'].includes(data.role)) setStaffState('denied')
+        else setStaffState({ role: data.role as 'owner' | 'admin' | 'scorer' })
       })
     return () => {
       cancelled = true
@@ -63,7 +66,7 @@ export function StaffPage() {
     )
   }
 
-  if (staffOk === false) {
+  if (staffState === 'denied') {
     return (
       <main className="page narrow">
         <h1>Accesso negato</h1>
@@ -77,7 +80,7 @@ export function StaffPage() {
     )
   }
 
-  if (staffOk === null) {
+  if (staffState === 'checking') {
     return (
       <main className="page center">
         <p>Verifica permessi…</p>
@@ -85,22 +88,16 @@ export function StaffPage() {
     )
   }
 
+  const canManageStructure = staffState.role === 'owner' || staffState.role === 'admin'
+
   return (
-    <main className="page narrow">
-      <p className="eyebrow">Staff · {tournament.name}</p>
-      <h1>Pannello risultati</h1>
-      <p className="lede">
-        Da qui (con sessione attiva) potrai aggiornare <code>matches</code> e inserire{' '}
-        <code>goals</code>; la pagina pubblica si aggiorna con Realtime.
-      </p>
-      <div className="actions">
-        <Link className="btn btn-ghost" to={`/t/${tournament.slug}`}>
-          Sito pubblico
-        </Link>
-        <Link className="btn btn-ghost" to="/admin">
-          Dashboard
-        </Link>
-      </div>
+    <main className="page tournament-staff-main">
+      <StaffTournamentPanel
+        tournamentId={tournament.id}
+        tournamentSlug={tournament.slug}
+        tournamentName={tournament.name}
+        canManageStructure={canManageStructure}
+      />
     </main>
   )
 }

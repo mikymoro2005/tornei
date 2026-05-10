@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+import { PublicTournamentView } from '../components/public/PublicTournamentView'
 import { TournamentPublicLayout } from '../components/TournamentPublicLayout'
 import { useTournamentBySlug } from '../hooks/useTournamentBySlug'
 
@@ -24,5 +25,9 @@ export function TournamentPublicPage() {
     )
   }
 
-  return <TournamentPublicLayout tournament={tournament} />
+  return (
+    <TournamentPublicLayout tournament={tournament}>
+      <PublicTournamentView tournament={tournament} />
+    </TournamentPublicLayout>
+  )
 }

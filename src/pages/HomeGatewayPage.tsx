@@ -1,3 +1,4 @@
+import { PublicTournamentView } from '../components/public/PublicTournamentView'
 import { TournamentPublicLayout } from '../components/TournamentPublicLayout'
 import { useTournamentByCustomDomain } from '../hooks/useTournamentByCustomDomain'
 import { isPrimarySiteHostname, isVercelAppHostname } from '../lib/siteHost'
@@ -71,5 +72,9 @@ export function HomeGatewayPage() {
     return <HomePage />
   }
 
-  return <TournamentPublicLayout tournament={tournament} />
+  return (
+    <TournamentPublicLayout tournament={tournament}>
+      <PublicTournamentView tournament={tournament} />
+    </TournamentPublicLayout>
+  )
 }
