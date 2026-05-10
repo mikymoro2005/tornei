@@ -1,0 +1,70 @@
+:root {
+  --text: #3f3f46;
+  --text-heading: #18181b;
+  --muted: #71717a;
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f4f4f5;
+  --border: #e4e4e7;
+  --accent: #15803d;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+
+  --t-primary: var(--accent);
+  --t-secondary: #ca8a04;
+
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #d4d4d8;
+    --text-heading: #fafafa;
+    --muted: #a1a1aa;
+    --bg: #09090b;
+    --surface: #18181b;
+    --surface-2: #27272a;
+    --border: #3f3f46;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  color: var(--text-heading);
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: color-mix(in srgb, var(--t-primary) 85%, var(--text-heading));
+}
+
+code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+  background: var(--surface-2);
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+}
