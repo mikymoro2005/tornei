@@ -4,6 +4,7 @@ import { useAuth } from '../auth/useAuth'
 import { usePlatformOperator } from '../hooks/usePlatformOperator'
 import { ownerLoginPath } from '../config/paths'
 import { isSupabaseConfigured } from '../lib/supabase'
+import { SupabaseConfigMissing } from './SupabaseConfigMissing'
 
 export function ProtectedOwnerRoute({ children }: { children: ReactNode }) {
   const { session, user, loading: authLoading } = useAuth()
@@ -18,12 +19,7 @@ export function ProtectedOwnerRoute({ children }: { children: ReactNode }) {
   }
 
   if (!isSupabaseConfigured) {
-    return (
-      <main className="page center">
-        <h1>Supabase non configurato</h1>
-        <Link to="/">Home</Link>
-      </main>
-    )
+    return <SupabaseConfigMissing title="Supabase non configurato" />
   }
 
   if (!session) {

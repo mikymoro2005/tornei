@@ -124,6 +124,41 @@
   margin-bottom: 0.5rem;
 }
 
+ol.list.numbered {
+  counter-reset: step;
+  list-style: none;
+  padding-left: 0;
+  text-align: left;
+}
+
+ol.list.numbered > li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+ol.list.numbered > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.4rem;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text-heading);
+}
+
+ul.list.tight {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+}
+
 .list code {
   font-size: 0.88em;
 }

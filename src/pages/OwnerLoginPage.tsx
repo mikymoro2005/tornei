@@ -1,6 +1,7 @@
 import { type FormEvent, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
+import { SupabaseConfigMissing } from '../components/SupabaseConfigMissing'
 import { ownerPortalPath } from '../config/paths'
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
 
@@ -21,13 +22,7 @@ export function OwnerLoginPage() {
   }
 
   if (!isSupabaseConfigured || !supabase) {
-    return (
-      <main className="page narrow">
-        <h1>Login non disponibile</h1>
-        <p className="lede">Configura le variabili Supabase.</p>
-        <Link to="/">← Home</Link>
-      </main>
-    )
+    return <SupabaseConfigMissing title="Login non disponibile (portale gestore)" />
   }
 
   if (session) {

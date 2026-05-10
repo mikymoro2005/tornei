@@ -1,6 +1,7 @@
 import { type FormEvent, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
+import { SupabaseConfigMissing } from '../components/SupabaseConfigMissing'
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
 
 export function AdminLoginPage() {
@@ -23,13 +24,7 @@ export function AdminLoginPage() {
   }
 
   if (!isSupabaseConfigured || !supabase) {
-    return (
-      <main className="page narrow">
-        <h1>Login non disponibile</h1>
-        <p className="lede">Mancano le variabili Supabase nel build (vedi <code>.env.example</code>).</p>
-        <Link to="/">← Home</Link>
-      </main>
-    )
+    return <SupabaseConfigMissing title="Login non disponibile" />
   }
 
   if (session) {

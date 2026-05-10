@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
-import { Link, Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
+import { SupabaseConfigMissing } from './SupabaseConfigMissing'
 import { isSupabaseConfigured } from '../lib/supabase'
 
 export function ProtectedRoute({ children }: { children: ReactNode }) {
@@ -16,13 +17,7 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
   }
 
   if (!isSupabaseConfigured) {
-    return (
-      <main className="page center">
-        <h1>Supabase non configurato</h1>
-        <p>Aggiungi <code>VITE_SUPABASE_URL</code> e <code>VITE_SUPABASE_ANON_KEY</code> (anche su Vercel).</p>
-        <Link to="/">Home</Link>
-      </main>
-    )
+    return <SupabaseConfigMissing title="Supabase non configurato" />
   }
 
   if (!session) {
