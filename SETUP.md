@@ -61,9 +61,11 @@ File `.env.provision` nella root:
 
 1. Nuovo progetto **tornei** (così ottieni `tornei.vercel.app`).
 2. Build: `npm run build`, cartella output **dist**.
-3. Imposta tutte le variabili `VITE_*` come sopra (Production / Preview).
+3. Imposta tutte le variabili `VITE_*` come sopra sia in **Production** che in **Preview** (deploy branch / PR usano Preview: senza chiavi vedrai pagine vuote senza Supabase).
 
 `vercel.json` è già impostato per le route SPA.
+
+Sulla root `/`, qualunque host `*.vercel.app` è trattato come **hub pubblica Tornei**, non si cerca più `custom_domain` su quel tipo di URL (solo per domini custom dei clienti).
 
 ## 5. Uso quotidiano
 

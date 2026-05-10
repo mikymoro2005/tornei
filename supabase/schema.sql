@@ -88,8 +88,18 @@ create table if not exists group_memberships (
   primary key (group_id, team_id)
 );
 
-create type match_phase as enum ('group', 'knockout', 'placement');
-create type match_status as enum ('scheduled', 'live', 'finished', 'cancelled');
+-- Idempotente: se riesegui lo script, i tipi esistono già (errore 42710).
+do $$ begin
+  create type match_phase as enum ('group', 'knockout', 'placement');
+exception
+  when duplicate_object then null;
+end $$;
+
+do $$ begin
+  create type match_status as enum ('scheduled', 'live', 'finished', 'cancelled');
+exception
+  when duplicate_object then null;
+end $$;
 
 create table if not exists matches (
   id uuid primary key default uuid_generate_v4(),

@@ -17,3 +17,12 @@ export function getPrimarySiteHosts(): Set<string> {
 export function isPrimarySiteHostname(hostname: string): boolean {
   return getPrimarySiteHosts().has(hostname.toLowerCase())
 }
+
+/**
+ * Deploy Vercel (produzione, preview, branch deploy): sulla root `/` mostriamo sempre la hub
+ * marketing e non cerciamo `custom_domain`. I tornei pubblici qui restano `/t/:slug`.
+ * Il multi-dominio “solo torneo” vale per hostname che non sono `*.vercel.app`.
+ */
+export function isVercelAppHostname(hostname: string): boolean {
+  return hostname.toLowerCase().endsWith('.vercel.app')
+}
