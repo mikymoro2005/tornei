@@ -201,6 +201,21 @@
   margin-top: 1.5rem;
 }
 
+.foot-note.muted,
+.muted {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.foot-note.muted a {
+  color: var(--muted);
+}
+
+.foot-note.muted code {
+  font-size: 0.88em;
+}
+
 .lede.small {
   font-size: 0.95rem;
   margin-bottom: 1rem;
